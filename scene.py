@@ -4,13 +4,10 @@ import numpy as np
 class Intro(Scene):
     def construct(self):
         integrals_text = Text("What the hell are integrals?")
+        integrals_text[14:23].set_color(color=BLUE)
 
-        self.play(
-            Write(integrals_text),
-            run_time=3,
-            rate_func=rate_functions.ease_in_out_cubic
-        )
-        self.wait(2)
+        derivatives_text = Text("What the hell are derivatives?")
+        derivatives_text[14:25].set_color(color=BLUE)
 
         # x_length = 14.2, y_length = 8 are full screen axes
         axes = Axes(
@@ -40,6 +37,20 @@ class Intro(Scene):
             .scale(0.4)  # Scale down the text
             .next_to(dots[i], UP)  # Position text above the dot
             for i, p in enumerate(points)])
+
+        self.play(
+            Write(integrals_text),
+            run_time=3,
+            rate_func=rate_functions.ease_in_out_cubic
+        )
+        self.wait(2)
+
+        self.play(
+            Transform(integrals_text, derivatives_text),
+            run_time=2
+            )
+        
+        self.wait(2)
 
         self.play(
             Transform(integrals_text, axes_group),
