@@ -33,7 +33,13 @@ class Intro(Scene):
 
         # Groups axis elements into one
         axes_group = VGroup(axes, axis_labels)
-        x_squared = axes.plot(lambda x: x**2, color=RED)
+
+        x_squared = axes.plot(
+            lambda x: x**2, 
+            color=RED, 
+            x_range=[0, x_range.get_value()]
+            )
+
         points = [
             [1, 1, 0],
             [2, 4, 0]
@@ -141,7 +147,16 @@ class Intro(Scene):
             y_range.animate.set_value(10)
         )
 
-        x_squared_two = axes.plot(lambda x: x**2, color=RED)
+        axes_two = Axes(
+            x_range=(0, 10), 
+            x_length=13,
+            y_range=(0, 10),
+            y_length=7,
+            tips=False,
+            axis_config={"include_numbers": True, "font_size": 24}
+        )
+
+        x_squared_two = axes_two.plot(lambda x: x**2, color=RED)
 
         self.play(Transform(x_squared, x_squared_two))
     
