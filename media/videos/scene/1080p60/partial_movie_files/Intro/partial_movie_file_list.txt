@@ -1,0 +1,8 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/tonycs/Documents/Programming/Intro to Manim/media/videos/scene/1080p60/partial_movie_files/Intro/3977891868_213716659_223132457.mp4'
+file 'file:/Users/tonycs/Documents/Programming/Intro to Manim/media/videos/scene/1080p60/partial_movie_files/Intro/2852726489_1141282389_2584373860.mp4'
+file 'file:/Users/tonycs/Documents/Programming/Intro to Manim/media/videos/scene/1080p60/partial_movie_files/Intro/2852726489_2085444669_935349278.mp4'
+file 'file:/Users/tonycs/Documents/Programming/Intro to Manim/media/videos/scene/1080p60/partial_movie_files/Intro/2852726489_3890345977_1792151526.mp4'
+file 'file:/Users/tonycs/Documents/Programming/Intro to Manim/media/videos/scene/1080p60/partial_movie_files/Intro/2852726489_76149007_1826442942.mp4'
+file 'file:/Users/tonycs/Documents/Programming/Intro to Manim/media/videos/scene/1080p60/partial_movie_files/Intro/2852726489_3797350101_1886149886.mp4'
+file 'file:/Users/tonycs/Documents/Programming/Intro to Manim/media/videos/scene/1080p60/partial_movie_files/Intro/2852726489_255102487_2209064859.mp4'
