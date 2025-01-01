@@ -10,7 +10,6 @@ class Intro(Scene):
             run_time=3,
             rate_func=rate_functions.ease_in_out_cubic
         )
-
         self.wait(2)
 
         # x_length = 14.2, y_length = 8 are full screen axes
