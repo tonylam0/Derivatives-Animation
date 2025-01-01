@@ -141,12 +141,7 @@ class Intro(Scene):
             FadeOut(dot_positions),
             FadeOut(connecting_dot)
             )
-
-        self.play(
-            x_range.animate.set_value(10), 
-            y_range.animate.set_value(10)
-        )
-
+        
         axes_two = Axes(
             x_range=(0, 10), 
             x_length=13,
@@ -158,6 +153,57 @@ class Intro(Scene):
 
         x_squared_two = axes_two.plot(lambda x: x**2, color=RED)
 
-        self.play(Transform(x_squared, x_squared_two))
-    
+        self.play(
+            x_range.animate.set_value(10), 
+            y_range.animate.set_value(10),
+            Transform(x_squared, x_squared_two)
+        )
+
+        points = [
+            [1, 1, 0],
+            [1, 4, 0],
+            [2, 4, 0],
+            [2, 8, 0],
+            [3, 8, 0],
+            [3, 12, 0]
+        ]
+
+
+        dots = VGroup(*[Dot(axes_two.c2p(p[0], p[1])) for p in points])
+        dots.set_color(color=YELLOW_D)
+
+        transformed_points = [axes_two.c2p(x, y, z) for x, y, z in points]
+        rise_run = VMobject()
+        rise_run.set_points_as_corners(transformed_points)
+        rise_run.set_color(color=YELLOW_D)
+
+        slope_coor = Text(
+            "(3, 8)", 
+            font_size=20, 
+            color=YELLOW_D).next_to(dots[4], RIGHT)
+        
+        func_point = Dot(axes_two.c2p(3, 9), color=WHITE)
+        
+        func_coor = Text(
+            "(3, 9)", 
+            font_size=20, 
+            color=WHITE
+            ).next_to(func_point, RIGHT)
+
+        self.play(
+            Create(dots, run_time=2),
+            Create(rise_run, run_time=3)
+        )
+
+        self.wait(1)
+
+        self.play(
+            AnimationGroup(
+            Write(func_point, run_time=.75),
+            Write(slope_coor),
+            Write(func_coor),
+            lag_ratio=1
+            )
+        )
+
         self.wait(3)
