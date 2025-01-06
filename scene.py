@@ -72,7 +72,7 @@ class Intro(Scene):
 
         self.play(Unwrite(integrals_text), run_time=1)
 
-        self.wait(1)
+        self.wait()
 
         self.play(
             FadeIn(axes_group),
@@ -80,7 +80,7 @@ class Intro(Scene):
             rate_func=rate_functions.ease_in_out_cubic
         )
 
-        self.wait(1)
+        self.wait()
 
         self.play(
             Write(x_squared),
@@ -199,7 +199,7 @@ class Intro(Scene):
             Create(rise_run, run_time=3)
         )
 
-        self.wait(1)
+        self.wait()
 
         self.play(
             AnimationGroup(
@@ -222,7 +222,7 @@ class Intro(Scene):
             )
         )
 
-        self.wait(1)
+        self.wait()
 
         # Updates the dot and text according to x value
         alpha = ValueTracker(0)
@@ -250,31 +250,63 @@ class Intro(Scene):
 
         self.wait(3)
 
-        # Explain limit definition of Derivatives=
-        linear_func = axes_two.plot(
-            lambda x: 2 * x,
-            x_range=[0, 5.5],
+        # Explain limit definition of Derivatives
+        scalar = ValueTracker(3)
+
+        linear_func = always_redraw(
+            lambda: axes_two.plot(
+            lambda x: scalar.get_value() * x,
+            x_range=[0, 12],
             color=RED
+            )
         )
 
-        # slope_question = Text(
-        #     "How do we calculate slope?",
-        #     font_size=36
-        # ).next_to(linear_func, RIGHT*.1)
+        # Can't do AnimationGroup due to ValueTracker
+        self.play(Unwrite(x_squared), run_time=1.5)
 
-        # slope_ex = Tex(
-        #     r"$\frac{y_{2} - y_{1}}{x_{2} - x_{1}}$",
-        #     font_size=72,
-        # ).next_to(linear_func, RIGHT).shift(RIGHT*10)
+        self.wait(.5)
+
+        self.play(Write(linear_func), run_time=3)
+
+        self.wait(2)
+
+        # Animates linear function changing
+        self.play(scalar.animate.set_value(1), run_time=1.5)
+        self.play(scalar.animate.set_value(5), run_time=2)
+        self.play(scalar.animate.set_value(3))
+
+        self.wait(2)
+
+        points = [
+            [1, 3, 0],
+            [1, 6, 0],
+            [2, 6, 0]
+        ]
+
+        dots = VGroup(*[Dot(axes_two.c2p(p[0], p[1])) for p in points])
+
+        transformed_points = [axes_two.c2p(x, y, z) for x, y, z in points]
+        rise_run = VMobject()
+        rise_run.set_points_as_corners(transformed_points)
+
+        dot_pos_one = Text(
+            f"({points[0][0]}, {points[0][1]})",
+            font_size=28
+        ).next_to(dots[0])
+
+        dot_pos_two = Text(
+            f"({points[2][0]}, {points[2][1]})",
+            font_size=28
+        ).next_to(dots[2])
 
         self.play(
-            AnimationGroup(
-            Unwrite(x_squared),
-            Write(linear_func),
-            lag_ratio=1.5
-            ),
-            run_time=5,
-            rate_func=rate_functions.ease_in_out_cubic
+            FadeIn(dots, run_time=2),
+            Write(rise_run, run_time=3),
+        )
+
+        self.play(
+            Write(dot_pos_one),
+            Write(dot_pos_two)
         )
 
         self.wait(3)

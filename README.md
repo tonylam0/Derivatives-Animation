@@ -1,3 +1,3 @@
-# Integrals-Animation
+# Derivatives Animation
 
-A simple integral demonstration/animation using the Manim library
+A simple derivatives demonstration/animation using the Manim library
