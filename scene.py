@@ -110,7 +110,7 @@ class Intro(Scene):
             rate_func=rate_functions.ease_in_out_cubic
             )
         
-        rise_num = Text("4", font_size=36)
+        rise_num = Text("3", font_size=36)
         run_num = Text("1", font_size=36)
         rise_num.next_to(rise_run, LEFT)
         run_num.next_to(rise_run, UP)
@@ -122,7 +122,7 @@ class Intro(Scene):
         self.wait(2)
 
         wrong_slope = Text(
-            "Slope = 4?", 
+            "Slope = 3?", 
             font_size=72, 
             color=YELLOW_D
         )
@@ -142,6 +142,7 @@ class Intro(Scene):
             FadeOut(connecting_dot)
             )
         
+        # Scales the axes and its parts up
         axes_two = Axes(
             x_range=(0, 10), 
             x_length=13,
@@ -151,7 +152,11 @@ class Intro(Scene):
             axis_config={"include_numbers": True, "font_size": 24}
         )
 
-        x_squared_two = axes_two.plot(lambda x: x**2, color=RED)
+        x_squared_two = axes_two.plot(
+            lambda x: x**2, 
+            color=RED, 
+            x_range=[0, 4]
+            )
 
         self.play(
             x_range.animate.set_value(10), 
@@ -167,7 +172,6 @@ class Intro(Scene):
             [3, 8, 0],
             [3, 12, 0]
         ]
-
 
         dots = VGroup(*[Dot(axes_two.c2p(p[0], p[1])) for p in points])
         dots.set_color(color=YELLOW_D)
@@ -200,10 +204,44 @@ class Intro(Scene):
         self.play(
             AnimationGroup(
             Write(func_point, run_time=.75),
-            Write(slope_coor),
             Write(func_coor),
+            Write(slope_coor),
             lag_ratio=1
             )
         )
+
+        self.wait(3)
+
+        self.play(
+            FadeOut(func_point),
+            FadeOut(func_coor),
+            FadeOut(slope_coor),
+            FadeOut(dots),
+            FadeOut(rise_run)
+        )
+
+        # Updates the dot and text according to x value
+        alpha = ValueTracker(0)
+
+        moving_dot = always_redraw(
+            lambda: Dot(
+                axes_two.c2p(4 * alpha.get_value(), (4 * alpha.get_value())**2)
+            )
+        )
+
+        slope_text = always_redraw(
+            lambda: Text(
+                f"Slope = {8 * alpha.get_value():.2f}",
+                font_size=12
+            ).next_to(moving_dot, UP*.5)
+        )
+
+        self.add(moving_dot, slope_text)
+
+        self.play(
+                alpha.animate.set_value(1),
+                run_time=3,
+                rate_func=rate_functions.linear
+            )
 
         self.wait(3)
