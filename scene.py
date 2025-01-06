@@ -213,12 +213,16 @@ class Intro(Scene):
         self.wait(3)
 
         self.play(
-            FadeOut(func_point),
-            FadeOut(func_coor),
-            FadeOut(slope_coor),
-            FadeOut(dots),
-            FadeOut(rise_run)
+            FadeOut(
+                func_point, 
+                func_coor, 
+                slope_coor, 
+                dots, 
+                rise_run
+            )
         )
+
+        self.wait(1)
 
         # Updates the dot and text according to x value
         alpha = ValueTracker(0)
@@ -240,8 +244,37 @@ class Intro(Scene):
 
         self.play(
                 alpha.animate.set_value(1),
-                run_time=3,
-                rate_func=rate_functions.linear
+                run_time=4,
+                rate_func=rate_functions.smooth
             )
+
+        self.wait(3)
+
+        # Explain limit definition of Derivatives=
+        linear_func = axes_two.plot(
+            lambda x: 2 * x,
+            x_range=[0, 5.5],
+            color=RED
+        )
+
+        # slope_question = Text(
+        #     "How do we calculate slope?",
+        #     font_size=36
+        # ).next_to(linear_func, RIGHT*.1)
+
+        # slope_ex = Tex(
+        #     r"$\frac{y_{2} - y_{1}}{x_{2} - x_{1}}$",
+        #     font_size=72,
+        # ).next_to(linear_func, RIGHT).shift(RIGHT*10)
+
+        self.play(
+            AnimationGroup(
+            Unwrite(x_squared),
+            Write(linear_func),
+            lag_ratio=1.5
+            ),
+            run_time=5,
+            rate_func=rate_functions.ease_in_out_cubic
+        )
 
         self.wait(3)
