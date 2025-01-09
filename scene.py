@@ -272,7 +272,7 @@ class Intro(Scene):
 
         # Animates linear function changing
         self.play(scalar.animate.set_value(1), run_time=1.5)
-        self.play(scalar.animate.set_value(5), run_time=2)
+        self.play(scalar.animate.set_value(5), run_time=1.75)
         self.play(scalar.animate.set_value(3))
 
         self.wait(2)
@@ -284,24 +284,29 @@ class Intro(Scene):
         ]
 
         dots = VGroup(*[Dot(axes_two.c2p(p[0], p[1])) for p in points])
+        dots.set_color(color=BLUE_B)
 
         transformed_points = [axes_two.c2p(x, y, z) for x, y, z in points]
         rise_run = VMobject()
         rise_run.set_points_as_corners(transformed_points)
+        rise_run.set_color(color=BLUE_B)
 
         dot_pos_one = Text(
             f"({points[0][0]}, {points[0][1]})",
-            font_size=28
+            font_size=28,
+            color=BLUE_B
         ).next_to(dots[0])
 
         dot_pos_two = Text(
             f"({points[2][0]}, {points[2][1]})",
-            font_size=28
+            font_size=28,
+            color=BLUE_B
         ).next_to(dots[2])
 
         self.play(
-            FadeIn(dots, run_time=2),
-            Write(rise_run, run_time=3),
+            Write(dots, run_time=1.25),
+            Write(rise_run, run_time=3.1),
+            rate_func=rate_functions.ease_in_out_cubic
         )
 
         self.play(
